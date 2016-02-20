@@ -8,8 +8,17 @@
     "compatibility": "0.x || 1.x",
     "author": {
         "name": "Tim van de Vathorst",
-        "email": "tim@vandevathorst.nl"
+        "email": "tim@vandevathorst.nl",
+        "website": "timvandevathorst.nl",
+        "github": "https://github.com/Timvdv/homey-random-cat-fact"        
     },
+    "description": {
+        "en": "Tells you a random cat fact to feed your knowledge"
+    },    
+    "images": {
+        "large": "./assets/images/large.png",
+        "small": "./assets/images/small.png"
+    },    
     "dependencies": {
         "request": "*"
     },

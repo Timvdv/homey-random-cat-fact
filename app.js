@@ -24,7 +24,7 @@ function init()
             }).on('error', function(e)
             {
                 console.log("Got error: " + e.message);
-                Homey.manager('speech-output').say( __('internet_error') );
+                Homey.manager('speech-output').say('No internet connection');
             });
         });
 }
