@@ -1,0 +1,45 @@
+{
+    "id": "com.appspot.catfacts-api",
+    "name": {
+        "en": "Random cat fact"
+    },
+    "category": "internet",
+    "version": "0.0.1",
+    "compatibility": "0.x || 1.x",
+    "author": {
+        "name": "Tim van de Vathorst",
+        "email": "tim@vandevathorst.nl"
+    },
+    "dependencies": {
+        "request": "*"
+    },
+    "permissions": [
+        "homey:manager:speech-output"
+    ],
+    "speech": [
+        {
+            "id": "random",
+            "importance": 0.4,
+            "triggers": {
+                "en": [ "random" ],
+                "nl": [ "willekeurig"]
+            }
+        },
+        {
+            "id": "cat",
+            "importance": 0.6,
+            "triggers": {
+                "en": [ "cat", "get" ],
+                "nl": [ "katten", "kat"]
+            }
+        },
+        {
+            "id": "fact",
+            "importance": 0.4,
+            "triggers": {
+                "en": [ "fact", "facts"],
+                "nl": [ "feit", "feitje"]
+            }
+        }
+    ]    
+}
