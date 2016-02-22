@@ -38,16 +38,14 @@
             "id": "cat",
             "importance": 0.6,
             "triggers": {
-                "en": [ "cat", "get" ],
-                "nl": [ "katten", "kat"]
+                "en": [ "cat", "get" ]
             }
         },
         {
             "id": "fact",
             "importance": 0.4,
             "triggers": {
-                "en": [ "fact", "facts"],
-                "nl": [ "feit", "feitje"]
+                "en": [ "fact", "facts"]
             }
         }
     ]    
