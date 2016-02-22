@@ -30,8 +30,7 @@
             "id": "random",
             "importance": 0.4,
             "triggers": {
-                "en": [ "random" ],
-                "nl": [ "willekeurig"]
+                "en": [ "random" ]
             }
         },
         {
