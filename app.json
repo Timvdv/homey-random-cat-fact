@@ -47,5 +47,15 @@
                 "en": [ "fact", "facts"]
             }
         }
-    ]    
+    ],
+    "flow": {
+        "actions": [
+            {
+                "id": "tell_random_cat_fact",
+                "title": {
+                    "en": "Random cat fact"
+                }
+            }
+        ]
+    }
 }
