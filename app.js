@@ -4,7 +4,7 @@ var https = require('https');
 
 module.exports.init = function() {
     Homey.manager('speech-input').on('speech', function(speech, callback) {
-        getRandomCatFact();
+        getRandomCatFact(speech);
     });
 }
 
@@ -13,7 +13,8 @@ Homey.manager('flow').on('action.tell_random_cat_fact', function( callback, args
     callback( null, true );
 });
 
-function getRandomCatFact() {
+function getRandomCatFact(speech) {
+    speech = speech || Homey.manager('speech-output');
     https.get('https://catfact.ninja/fact', function(res) {
         var body = '';
 
@@ -21,11 +22,11 @@ function getRandomCatFact() {
             body += chunk;
         }).on('end', function() {
             body = JSON.parse(body);
-            Homey.manager('speech-output').say( body.fact );
+            speech.say( body.fact );
         });
 
     }).on('error', function(e) {
         console.log("Got error: " + e.message);
-        Homey.manager('speech-output').say('No internet connection');
+        speech.say('No internet connection');
     });
 }
