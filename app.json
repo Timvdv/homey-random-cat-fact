@@ -1,5 +1,6 @@
 {
     "id": "com.appspot.catfacts-api",
+    "sdk": 2,
     "name": {
         "en": "Random cat fact"
     },
