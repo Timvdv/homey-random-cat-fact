@@ -7,7 +7,7 @@
     },
     "category": "internet",
     "version": "0.0.4",
-    "compatibility": "0.x || 1.x",
+    "compatibility": "^1.3",
     "author": {
         "name": "Tim van de Vathorst",
         "email": "tim@vandevathorst.nl",
