@@ -2,7 +2,8 @@
     "id": "com.appspot.catfacts-api",
     "sdk": 2,
     "name": {
-        "en": "Random cat fact"
+        "en": "Random cat fact",
+        "nl": "Katten weetjes"
     },
     "category": "internet",
     "version": "0.0.3",
@@ -14,7 +15,8 @@
         "github": "https://github.com/Timvdv/homey-random-cat-fact"
     },
     "description": {
-        "en": "Tells you a random cat fact to feed your knowledge"
+        "en": "Tells you a random cat fact to feed your knowledge",
+        "nl": "Verteld je interessante katten weetjes in willekeurige volgorde"
     },
     "images": {
         "large": "./assets/images/large.png",
@@ -26,29 +28,58 @@
     "permissions": [
         "homey:manager:speech-output"
     ],
-    "speech": [
-        {
-            "id": "random",
-            "importance": 0.4,
-            "triggers": {
-                "en": [ "random" ]
-            }
+    "speech": {
+        "en": {
+            "element": {
+                "actionWords": {
+                    "type": "regex",
+                    "value": "(tell(\\sme|\\sus)|random)"
+                },
+                "catFact": {
+                    "type": "regex",
+                    "value": "(cat|kitten)"
+                }
+            },
+            "group": {
+                "main": {
+                    "set": "(actionWords) && catFact",
+                    "ordered": false,
+                    "allowDisconnect": true,
+                    "capturingGroup": true
+                }
+            }            
         },
-        {
-            "id": "cat",
-            "importance": 0.6,
-            "triggers": {
-                "en": [ "cat", "get" ]
+        "nl": {
+            "element": {
+                "actionWords": {
+                    "type": "regex",
+                    "value": "(willekeurig|vertel)"
+                },
+                "catFact": {
+                    "type": "regex",
+                    "value": "(katten(\\feitje|\\pootje|\\weetje)|poezen(\\feitje|\\pootje|\\weetje)|kitten(\\feitje|\\pootje|\\weetje)|kat(\\feitje|\\pootje|\\weetje))"
+                }             
+            },
+            "group": {
+                "main": {
+                    "set": "(actionWords) && catFact",
+                    "ordered": false,
+                    "allowDisconnect": true,
+                    "capturingGroup": true
+                }
             }
-        },
-        {
-            "id": "fact",
-            "importance": 0.4,
-            "triggers": {
-                "en": [ "fact", "facts"]
-            }
-        }
-    ],
+        }        
+    },
+    "speechExamples": {
+        "en": [
+            "Random cat fact.",
+            "Tell me a cat fact."
+        ],
+        "nl": [
+            "Willekeurig katten feitje.",
+            "Vertel een katten feitje."
+        ]
+    },
     "flow": {
         "actions": [
             {

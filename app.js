@@ -1,32 +1,80 @@
 "use strict";
 
-var https = require('https');
+const https = require('https');
+const Homey = require('homey');
+const Log = require('homey-log').Log;
 
-module.exports.init = function() {
-    Homey.manager('speech-input').on('speech', function(speech, callback) {
-        getRandomCatFact(speech);
-    });
-}
+class App extends Homey.App {
+    async onInit() {
+        this.log(`${Homey.app.manifest.id} is running...`);
 
-Homey.manager('flow').on('action.tell_random_cat_fact', function( callback, args ) {
-    getRandomCatFact();
-    callback( null, true );
-});
+        this._initFlow();
+        this._initSpeech();
+    }
 
-function getRandomCatFact(speech) {
-    speech = speech || Homey.manager('speech-output');
-    https.get('https://catfact.ninja/fact', function(res) {
-        var body = '';
+    _initFlow() {
+        new Homey.FlowCardAction('tell_random_cat_fact')
+            .register()
+            .registerRunListener(async args => {
+                return this.getRandomCatFact();
+            });
+    }
 
-        res.on('data', function(chunk) {
-            body += chunk;
-        }).on('end', function() {
-            body = JSON.parse(body);
-            speech.say( body.fact );
+    _initSpeech() {
+        Homey.ManagerSpeechInput.on('speechEval', function (speech, callback) {
+            this.log(JSON.stringify(speech.matches));
+            let match = speech.matches.importantProperty.length > 3;
+            callback(null, true);
         });
 
-    }).on('error', function(e) {
-        console.log("Got error: " + e.message);
-        speech.say('No internet connection');
-    });
+        Homey.ManagerSpeechInput.on('speechMatch', function (speech, onSpeechEvalData) {
+            this.getRandomCatFact(speech);
+        });
+    }
+
+    getRandomCatFact(speech) {
+        speech = speech || Homey.ManagerSpeechOutput;
+
+        https.get('https://catfact.ninja/fact', (res) => {
+            let body = '';
+
+            res.on('data', (chunk) => {
+                body += chunk;
+            }).on('end', () => {
+                body = JSON.parse(body);
+
+                const language = Homey.ManagerI18n.getLanguage();
+
+                if (language === "nl") {
+                    this.translateResponse(speech, body.fact);
+                } else {
+                    speech.say(body.fact);
+                }
+            });
+        }).on('error', (e) => {
+            this.log(`Got error: ${e.message}`);
+            speech.say('No internet connection');
+        });
+    }
+
+    translateResponse(speech, fact) {
+        const api_key = "trnsl.1.1.20171210T115658Z.8ed4d27cadc8e1ca.8f0ad4b27b3c8b5b19a12e6420a2a0e18a81ccb0";
+        const encoded_fact = encodeURI(fact);
+        https.get(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${encoded_fact}&lang=nl`, (res) => {
+            let body = '';
+
+            res.on('data', (chunk) => {
+                body += chunk;
+            }).on('end', () => {
+                body = JSON.parse(body);
+                const text = body.text && body.text[0];
+                speech.say(text);
+            });
+        }).on('error', (e) => {
+            this.log(`Got error: ${e.message}`);
+            speech.say('Something went wrong while translating');
+        });
+    }
 }
+
+module.exports = App;
