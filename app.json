@@ -26,6 +26,7 @@
         "request": "*"
     },
     "permissions": [
+        "homey:manager:speech-input",
         "homey:manager:speech-output"
     ],
     "speech": {
@@ -33,11 +34,11 @@
             "element": {
                 "actionWords": {
                     "type": "regex",
-                    "value": "(tell(\\sme|\\sus)|random)"
+                    "value": "(tell|random)"
                 },
                 "catFact": {
                     "type": "regex",
-                    "value": "(cat|kitten)"
+                    "value": "(cat(\\fact|\\facts)?|kitten(\\fact|\\facts)?)"
                 }
             },
             "group": {
@@ -47,7 +48,7 @@
                     "allowDisconnect": true,
                     "capturingGroup": true
                 }
-            }            
+            }
         },
         "nl": {
             "element": {
@@ -57,8 +58,8 @@
                 },
                 "catFact": {
                     "type": "regex",
-                    "value": "(katten(\\feitje|\\pootje|\\weetje)|poezen(\\feitje|\\pootje|\\weetje)|kitten(\\feitje|\\pootje|\\weetje)|kat(\\feitje|\\pootje|\\weetje))"
-                }             
+                    "value": "(katten(\\feitje|\\pootje|\\weetje)?|poezen(\\feitje|\\pootje|\\weetje)?|kitten(\\feitje|\\pootje|\\weetje)?|kat(\\feitje|\\pootje|\\weetje)?)"
+                }
             },
             "group": {
                 "main": {
@@ -76,8 +77,8 @@
             "Tell me a cat fact."
         ],
         "nl": [
-            "Willekeurig katten feitje.",
-            "Vertel een katten feitje."
+            "Willekeurig kat feitje.",
+            "Vertel een katten weetje."
         ]
     },
     "flow": {

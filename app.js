@@ -21,13 +21,12 @@ class App extends Homey.App {
     }
 
     _initSpeech() {
-        Homey.ManagerSpeechInput.on('speechEval', function (speech, callback) {
-            this.log(JSON.stringify(speech.matches));
-            let match = speech.matches.importantProperty.length > 3;
-            callback(null, true);
+        Homey.ManagerSpeechInput.on('speechEval', (speech, callback) => {
+            let match = speech.matches;
+            callback(null, match);
         });
 
-        Homey.ManagerSpeechInput.on('speechMatch', function (speech, onSpeechEvalData) {
+        Homey.ManagerSpeechInput.on('speechMatch', (speech, onSpeechEvalData) => {
             this.getRandomCatFact(speech);
         });
     }
