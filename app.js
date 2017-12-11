@@ -2,11 +2,11 @@
 
 const https = require('https');
 const Homey = require('homey');
-const Log = require('homey-log').Log;
+// const Log = require('homey-log').Log;
 
 class App extends Homey.App {
     async onInit() {
-        this.log(`${Homey.app.manifest.id} is running...`);
+        // this.log(`${Homey.app.manifest.id} is running...`);
 
         this._initFlow();
         this._initSpeech();
@@ -51,7 +51,7 @@ class App extends Homey.App {
                 }
             });
         }).on('error', (e) => {
-            this.log(`Got error: ${e.message}`);
+            // this.log(`Got error: ${e.message}`);
             speech.say('No internet connection');
         });
     }
@@ -70,7 +70,7 @@ class App extends Homey.App {
                 speech.say(text);
             });
         }).on('error', (e) => {
-            this.log(`Got error: ${e.message}`);
+            // this.log(`Got error: ${e.message}`);
             speech.say('Something went wrong while translating');
         });
     }
